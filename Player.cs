@@ -10,6 +10,10 @@ namespace rpg
         private Dir direction = Dir.Down;
         private bool isMoving = false;
 
+        public SpriteAnimation anim;
+
+        public SpriteAnimation[] animations = new SpriteAnimation[4];
+
         public Vector2 Position
         {
             get { return position; }
@@ -26,7 +30,7 @@ namespace rpg
         public void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-            double realSpeed = 300 * gameTime.ElapsedGameTime.TotalSeconds;
+            double realSpeed = speed * gameTime.ElapsedGameTime.TotalSeconds;
 
             isMoving = false;
 
@@ -70,7 +74,20 @@ namespace rpg
                     default:
                         break;
                 }
-            }           
+            }
+
+            anim = animations[(int)direction];
+
+            anim.Position = new Vector2(position.X - 48, position.Y - 48);
+            
+            if (isMoving)
+            {
+                anim.Update(gameTime);
+            }
+            else
+            {
+                anim.setFrame(1);
+            }
         }
     }
 }

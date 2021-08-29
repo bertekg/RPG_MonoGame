@@ -56,7 +56,14 @@ namespace rpg
 
             backgroundSprite = Content.Load<Texture2D>("background");
             ballSprite = Content.Load<Texture2D>("ball");
-            skullSprite = Content.Load<Texture2D>("skull");            
+            skullSprite = Content.Load<Texture2D>("skull");
+
+            player.animations[(int)Dir.Down] = new SpriteAnimation(walkDownSprite, 4, 8);
+            player.animations[(int)Dir.Up] = new SpriteAnimation(walkUpSprite, 4, 8);
+            player.animations[(int)Dir.Left] = new SpriteAnimation(walkLeftSprite, 4, 8);
+            player.animations[(int)Dir.Right] = new SpriteAnimation(walkRightSprite, 4, 8);
+
+            player.anim = player.animations[0];
         }
 
         protected override void Update(GameTime gameTime)
@@ -79,7 +86,7 @@ namespace rpg
             _spriteBatch.Begin(this.camera);
 
             _spriteBatch.Draw(backgroundSprite, new Vector2(-500, -500), Color.White);
-            _spriteBatch.Draw(playerSprite, player.Position, Color.White);
+            player.anim.Draw(_spriteBatch);
 
             _spriteBatch.End();
 
