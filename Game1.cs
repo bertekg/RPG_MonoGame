@@ -56,7 +56,7 @@ namespace rpg
 
             backgroundSprite = Content.Load<Texture2D>("background");
             ballSprite = Content.Load<Texture2D>("ball");
-            skullSprite = Content.Load<Texture2D>("skull");
+            skullSprite = Content.Load<Texture2D>("skull");           
 
             player.animations[(int)Dir.Down] = new SpriteAnimation(walkDownSprite, 4, 8);
             player.animations[(int)Dir.Up] = new SpriteAnimation(walkUpSprite, 4, 8);
@@ -64,6 +64,9 @@ namespace rpg
             player.animations[(int)Dir.Right] = new SpriteAnimation(walkRightSprite, 4, 8);
 
             player.anim = player.animations[0];
+
+            Enemy.enemies.Add(new Enemy(new Vector2(100, 100), skullSprite));
+            Enemy.enemies.Add(new Enemy(new Vector2(200, 150), skullSprite));
         }
 
         protected override void Update(GameTime gameTime)
@@ -81,6 +84,11 @@ namespace rpg
                 projectile.Update(gameTime);
             }
 
+            foreach (Enemy enemy in Enemy.enemies)
+            {
+                enemy.Update(gameTime, player.Position);
+            }
+
             base.Update(gameTime);
         }
 
@@ -91,6 +99,10 @@ namespace rpg
             _spriteBatch.Begin(this.camera);
 
             _spriteBatch.Draw(backgroundSprite, new Vector2(-500, -500), Color.White);
+            foreach (Enemy enemy in Enemy.enemies)
+            {
+                enemy.anim.Draw(_spriteBatch);
+            }
             foreach (Projectile projectile in Projectile.projectiles)
             {
                 _spriteBatch.Draw(ballSprite, new Vector2(projectile.Position.X - 48, projectile.Position.Y - 48), Color.White);
