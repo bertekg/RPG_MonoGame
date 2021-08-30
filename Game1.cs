@@ -76,6 +76,11 @@ namespace rpg
             this.camera.Position = player.Position;
             this.camera.Update(gameTime);
 
+            foreach (Projectile projectile in Projectile.projectiles)
+            {
+                projectile.Update(gameTime);
+            }
+
             base.Update(gameTime);
         }
 
@@ -86,7 +91,11 @@ namespace rpg
             _spriteBatch.Begin(this.camera);
 
             _spriteBatch.Draw(backgroundSprite, new Vector2(-500, -500), Color.White);
-            player.anim.Draw(_spriteBatch);
+            foreach (Projectile projectile in Projectile.projectiles)
+            {
+                _spriteBatch.Draw(ballSprite, new Vector2(projectile.Position.X - 48, projectile.Position.Y - 48), Color.White);
+            }
+            player.anim.Draw(_spriteBatch);            
 
             _spriteBatch.End();
 

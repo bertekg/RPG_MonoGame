@@ -9,6 +9,7 @@ namespace rpg
         private double speed = 300;
         private Dir direction = Dir.Down;
         private bool isMoving = false;
+        private KeyboardState keyboardStateOld = Keyboard.GetState();
 
         public SpriteAnimation anim;
 
@@ -55,7 +56,12 @@ namespace rpg
                 isMoving = true;
             }
 
-            if (isMoving)
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                isMoving = false;
+            }
+
+                if (isMoving)
             {
                 switch (direction)
                 {
@@ -80,7 +86,11 @@ namespace rpg
 
             anim.Position = new Vector2(position.X - 48, position.Y - 48);
             
-            if (isMoving)
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                anim.setFrame(0);
+            }
+            else if (isMoving)
             {
                 anim.Update(gameTime);
             }
@@ -88,6 +98,13 @@ namespace rpg
             {
                 anim.setFrame(1);
             }
+
+            if (keyboardState.IsKeyDown(Keys.Space) && keyboardStateOld.IsKeyUp(Keys.Space))
+            {
+                Projectile.projectiles.Add(new Projectile(position, direction));
+            }
+
+            keyboardStateOld = keyboardState;
         }
     }
 }
