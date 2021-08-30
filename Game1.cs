@@ -64,9 +64,6 @@ namespace rpg
             player.animations[(int)Dir.Right] = new SpriteAnimation(walkRightSprite, 4, 8);
 
             player.anim = player.animations[0];
-
-            Enemy.enemies.Add(new Enemy(new Vector2(100, 100), skullSprite));
-            Enemy.enemies.Add(new Enemy(new Vector2(200, 150), skullSprite));
         }
 
         protected override void Update(GameTime gameTime)
@@ -75,6 +72,7 @@ namespace rpg
                 Exit();
 
             player.Update(gameTime);
+            Controller.Update(gameTime, skullSprite);
 
             this.camera.Position = player.Position;
             this.camera.Update(gameTime);
