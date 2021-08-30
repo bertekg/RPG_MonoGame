@@ -11,6 +11,8 @@ namespace rpg
         private Vector2 postion = new Vector2(0, 0);
         private double speed = 150;
         public SpriteAnimation anim;
+        public int radius = 30;
+        private bool dead = false;
 
         public Enemy(Vector2 newPos, Texture2D spriteSheet)
         {
@@ -21,6 +23,12 @@ namespace rpg
         public Vector2 Postion
         {
             get { return postion; }
+        }
+
+        public bool Dead
+        {
+            get { return dead; }
+            set { dead = value; }
         }
 
         public void Update(GameTime gameTime, Vector2 playerPosition)

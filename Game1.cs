@@ -89,6 +89,22 @@ namespace rpg
                 enemy.Update(gameTime, player.Position);
             }
 
+            foreach (Projectile projectile in Projectile.projectiles)
+            {
+                foreach (Enemy enemy in Enemy.enemies)
+                {
+                    int sum = projectile.radius + enemy.radius;
+                    if(Vector2.Distance(projectile.Position, enemy.Postion) <= sum)
+                    {
+                        projectile.Collided = true;
+                        enemy.Dead = true;
+                    }
+                }
+            }
+
+            Projectile.projectiles.RemoveAll(p => p.Collided);
+            Enemy.enemies.RemoveAll(e => e.Dead);
+
             base.Update(gameTime);
         }
 
