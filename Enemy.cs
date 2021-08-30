@@ -31,14 +31,17 @@ namespace rpg
             set { dead = value; }
         }
 
-        public void Update(GameTime gameTime, Vector2 playerPosition)
+        public void Update(GameTime gameTime, Vector2 playerPosition, bool isPlayerDead)
         {
             anim.Position = new Vector2(postion.X - 48, postion.Y - 66);
             anim.Update(gameTime);
 
-            Vector2 moveDirection = playerPosition - postion;
-            moveDirection.Normalize();
-            postion += moveDirection *(float)(speed * gameTime.ElapsedGameTime.TotalSeconds);
+            if (isPlayerDead == false)
+            {
+                Vector2 moveDirection = playerPosition - postion;
+                moveDirection.Normalize();
+                postion += moveDirection * (float)(speed * gameTime.ElapsedGameTime.TotalSeconds);
+            }            
         }
     }
 }

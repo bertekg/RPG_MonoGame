@@ -72,7 +72,10 @@ namespace rpg
                 Exit();
 
             player.Update(gameTime);
-            Controller.Update(gameTime, skullSprite);
+            if (player.dead == false)
+            {
+                Controller.Update(gameTime, skullSprite);
+            }
 
             this.camera.Position = player.Position;
             this.camera.Update(gameTime);
@@ -84,7 +87,12 @@ namespace rpg
 
             foreach (Enemy enemy in Enemy.enemies)
             {
-                enemy.Update(gameTime, player.Position);
+                enemy.Update(gameTime, player.Position, player.dead);
+                int sum = 32 + enemy.radius;
+                if (Vector2.Distance(player.Position, enemy.Postion) < sum)
+                {
+                    player.dead = true;
+                }
             }
 
             foreach (Projectile projectile in Projectile.projectiles)
@@ -121,8 +129,10 @@ namespace rpg
             {
                 _spriteBatch.Draw(ballSprite, new Vector2(projectile.Position.X - 48, projectile.Position.Y - 48), Color.White);
             }
-            player.anim.Draw(_spriteBatch);            
-
+            if (player.dead == false)
+            {
+                player.anim.Draw(_spriteBatch);
+            }
             _spriteBatch.End();
 
             base.Draw(gameTime);

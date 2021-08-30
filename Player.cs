@@ -10,6 +10,7 @@ namespace rpg
         private Dir direction = Dir.Down;
         private bool isMoving = false;
         private KeyboardState keyboardStateOld = Keyboard.GetState();
+        public bool dead = false;
 
         public SpriteAnimation anim;
 
@@ -61,21 +62,38 @@ namespace rpg
                 isMoving = false;
             }
 
-                if (isMoving)
+            if (dead)
+            {
+                isMoving = false;
+            }
+            
+            if (isMoving)
             {
                 switch (direction)
                 {
                     case Dir.Down:
-                        position.Y += (float)realSpeed;
+                        if (position.Y < 1250)
+                        {
+                            position.Y += (float)realSpeed;
+                        }
                         break;
                     case Dir.Up:
-                        position.Y -= (float)realSpeed;
+                        if (position.Y > 200)
+                        {
+                            position.Y -= (float)realSpeed;
+                        }
                         break;
                     case Dir.Left:
-                        position.X -= (float)realSpeed;
+                        if (position.X > 225)
+                        {
+                            position.X -= (float)realSpeed;
+                        }
                         break;
                     case Dir.Right:
-                        position.X += (float)realSpeed;
+                        if (position.X < 1275)
+                        {
+                            position.X += (float)realSpeed;
+                        }
                         break;
                     default:
                         break;
