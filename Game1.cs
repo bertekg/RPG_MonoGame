@@ -1,12 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 using Comora;
 
 namespace rpg
 {
     enum Dir { Down, Up, Left, Right }
+
+    public static class MySounds
+    {
+        public static SoundEffect projectileSound;
+        public static Song bgMusic;
+    }
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -64,6 +72,10 @@ namespace rpg
             player.animations[(int)Dir.Right] = new SpriteAnimation(walkRightSprite, 4, 8);
 
             player.anim = player.animations[0];
+
+            MySounds.projectileSound = Content.Load<SoundEffect>("Sounds/blip");
+            MySounds.bgMusic = Content.Load<Song>("Sounds/nature");
+            MediaPlayer.Play(MySounds.bgMusic);
         }
 
         protected override void Update(GameTime gameTime)

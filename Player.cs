@@ -120,6 +120,7 @@ namespace rpg
             if (keyboardState.IsKeyDown(Keys.Space) && keyboardStateOld.IsKeyUp(Keys.Space))
             {
                 Projectile.projectiles.Add(new Projectile(position, direction));
+                MySounds.projectileSound.Play(1f, 0.5f, 0f);
             }
 
             keyboardStateOld = keyboardState;
